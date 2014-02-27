@@ -93,7 +93,7 @@ To convert .npy.gz files to text, use the following commands:
 Results:
 --------
 
-For a 120second simulation of the source, I get the following results:  
+For a 120second simulation of a spin-1 source (photons), I get the following results:  
 
         No. of detected particles, non-zero outcomes only
 	        Alice:         2654386
