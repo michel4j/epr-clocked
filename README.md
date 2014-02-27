@@ -121,3 +121,8 @@ For a 120second simulation of the source, I get the following results:
 
 
 The file `analysis.png` shows the curves. You might not even notice that there are two curves because the fit is good.
+
+Other comments:
+---------------
+
+This simulation is then equivalent to a networked version. The source files can be copied to different computers disconnected from each other at a long distance apart before running the station program to generate outputs.
