@@ -72,11 +72,18 @@ Since all particles are detected. In other words, every particle which reaches t
 
 3) `analyse.py`:  
 Although not required to run and test the simulation, this is an analysis program which does
-the analysis in a manner similar to how it is done in typical EPR experiments. It borrows some matching algorithms
-from Jan-Åke Larsson's BellTiming code (Jan-Åke Larsson). At some point, I might rewrite the matching algorithm but this suffices for now.
+the analysis in a manner similar to how it is done in typical EPR experiments. It borrows some matching algorithms from Jan-Åke Larsson's BellTiming code (Jan-Åke Larsson, http://people.isy.liu.se/jalar/belltiming/). At some point, I might rewrite the matching algorithm but this suffices for now.
 
 The analysis program does not take any inputs. Instead it expects to find two files named `Alice.npy.gz` and `Bob.npy.gz`. It prints some 
 Statistics.
+
+Of course anyone is free to write their own analysis program. **Note however, that you can not avoid matching since, a few of the particles do not have counterparts and there is no way to know which ones without a matching algorithm.** To convert .npy.gz files to text, use the following commands:  
+        
+        python
+        >>> import numpy
+        >>> import gzip
+        >>> a = numpy.load(gzip.open("Alice.npy.gz","rb"))
+        >>> numpy.savetxt("Alice.txt", a)
 
 
 Results:
