@@ -41,7 +41,9 @@ NOTE, VERY IMPORTANT: 0.01% of particles emitted are randomly discarded so that
 for 0.01% of particles, there will be no counterpart in the other file. Other 
 than that, the particles are recorded sequentially in time. This means it won't 
 work to simply assume that the nth particle in one file is a pair with the nth 
-particle of the other file. This also means 99.9% of emitted particles are paired.
+particle of the other file. This also means 99.9% of emitted particles are paired. 
+Removing this feature will render this simulation meaningless. However, 99.999% should 
+work just as well.
 
 
 2) `station.py`:  
@@ -77,7 +79,9 @@ the analysis in a manner similar to how it is done in typical EPR experiments. I
 The analysis program does not take any inputs. Instead it expects to find two files named `Alice.npy.gz` and `Bob.npy.gz`. It prints some 
 Statistics.
 
-Of course anyone is free to write their own analysis program. **Note however, that you can not avoid matching since, a few of the particles do not have counterparts and there is no way to know which ones without a matching algorithm.** To convert .npy.gz files to text, use the following commands:  
+Of course anyone is free to write their own analysis program.
+
+To convert .npy.gz files to text, use the following commands:  
         
         python
         >>> import numpy
