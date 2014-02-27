@@ -31,13 +31,13 @@ class Station(object):
         self.particles = particles
         self.results = numpy.empty((len(particles), 3))
         self.ps = 0.5*numpy.sin(numpy.linspace(0, numpy.pi/6, 10000))**2
-        
+         
     def detect(self, particle, setting, i):
         """Calculate the station outcome for the given `particle`"""
         a = setting 
-        te, e, n, ts = particle
+        te, e, n, ts, m = particle
         C =  (0.5/numpy.pi)*((-1)**n)*numpy.cos(n*(e - a))
-        p = numpy.random.choice(self.ps)
+        p = m*numpy.random.choice(self.ps)
         
         # time it takes to rotate particle vector to channel vector.
         td = abs(C) < p and ts*(p-abs(C)) or 0.0 

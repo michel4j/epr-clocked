@@ -39,7 +39,7 @@ rcParams['figure.facecolor'] = 'white'
 rcParams['figure.edgecolor'] = 'white'
 
 
-PARTICLE_SPIN = 1.0
+PARTICLE_SPIN = 0.5
 ANGLE_RESOLUTION = 11.25
 COINC_WINDOW = 3.5e-4
 
@@ -57,6 +57,7 @@ def analyse(st1="Alice", st2="Bob"):
     ai, bi = find_coincs(alice_raw[:,0], bob_raw[:,0])
     alice_orig = alice_raw[ai,:]
     bob_orig = bob_raw[bi,:]
+
     
     # total time is greater than random number less than half the range
     abt_orig = numpy.abs(alice_orig[:,0] - bob_orig[:,0])
@@ -100,8 +101,8 @@ def analyse(st1="Alice", st2="Bob"):
     QM = []
     
     print "\nCalculation of expectation values"
-    print "%10s %10s %10s %10s %10s" % (
-            'Settings', 'N_ab', 'Trials', '<AB>_sim', '<AB>_qm')
+    print "%10s %10s %10s %10s %10s %10s" % (
+            'Settings', 'N_ab', 'Trials', '<AB>_sim', '<AB>_qm', 'StdErr_sim')
     for k,(i,j) in enumerate([(a,b),(a,bp), (ap,b), (ap, bp)]):
         As = (adeg==i)
         Bs = (bdeg==j)
@@ -111,7 +112,9 @@ def analyse(st1="Alice", st2="Bob"):
         Bj = bob[Ts, -1]
         Cab_sim = (Ai*Bj).mean()
         Cab_qm = QMFunc(numpy.radians(j-i))
-        print "%10s %10d %10d %10.3f %10.3f" % (DESIG[k], Ts.sum(), OTs.sum(), Cab_sim, Cab_qm)
+        
+        print "%10s %10d %10d %10.3f %10.3f %10.3f" % (DESIG[k], Ts.sum(), 
+                    OTs.sum(), Cab_sim, Cab_qm, numpy.abs(Cab_sim/numpy.sqrt(Ts.sum())))
         CHSH.append(Cab_sim)
         QM.append(Cab_qm )
     
@@ -143,7 +146,7 @@ def analyse(st1="Alice", st2="Bob"):
     
     for ax in [ax1]:  ax.set_xlim(0, 360)
 
-    plt.savefig('analysis.png', dpi=72)
+    plt.savefig('analysis-spin-%g.png' % PARTICLE_SPIN, dpi=72)
     
     print "\nStatistics of residuals between exact QM curve and Simulation"
     sts = dict(zip(['Length', 'Range', 'Mean', 'Variance', 'Skew', 'Kurtosis'], stats.describe((Eab - QMFunc(numpy.radians(x))))))

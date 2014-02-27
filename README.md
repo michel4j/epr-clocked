@@ -30,6 +30,7 @@ The columns are:
         'hidden-variable 1'
         'hidden-variable 2'
         'hidden-variable 3'
+        'hidden-variable 4'
         
 The source program takes as input, 2 parameters:
 
@@ -120,7 +121,34 @@ For a 120second simulation of a spin-1 source (photons), I get the following res
               Mean:        0.000445
 
 
-The file `analysis.png` shows the curves. You might not even notice that there are two curves because the fit is good.
+A similar simulation for a spin-1/2 source (electrons), I get the following results:  
+
+        No. of detected particles, non-zero outcomes only
+	        Alice:         2854767
+	          Bob:         2854760
+
+
+        Calculation of expectation values
+          Settings       N_ab     Trials   <AB>_sim    <AB>_qm
+           0, 22.5       1875       2217     -0.922     -0.924
+           0, 67.5       1692       2111     -0.402     -0.383
+          45, 22.5       1862       2172     -0.907     -0.924
+          45, 67.5       1963       2298     -0.916     -0.924
+
+	        Same Angle <AB> = -1.00
+	        Oppo Angle <AB> = -0.00
+	        CHSH: <= 2.0, Sim: 2.343, QM: 2.389
+
+        Statistics of residuals between exact QM curve and Simulation
+              Skew:          0.1341
+             Range: -0.01134 : 0.01229
+            Length:              32
+          Variance:       3.531e-05
+          Kurtosis:         -0.4947
+              Mean:       0.0002476
+
+The files `analysis-spin-1.png` and `analysis-spin-0.5.png` show the curves. Note the quality of fit
+even though for each angle pair we are only simulating about 2000 points. 
 
 Other comments:
 ---------------
