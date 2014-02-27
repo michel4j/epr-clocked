@@ -129,8 +129,8 @@ def analyse(st1="Alice", st2="Bob"):
               
     gs = gridspec.GridSpec(2,2)
     ax1 = plt.subplot(gs[:,:])    
-    ax1.plot(x, Eab, 'm-', label='Model: E(a,b)')
-    ax1.plot(x, QMFunc(numpy.radians(x)), 'b-', label='QM')
+    ax1.plot(x, Eab, 'm-x', label='Model: E(a,b)')
+    ax1.plot(x, QMFunc(numpy.radians(x)), 'b-+', label='QM')
     #ax1.plot(x, (Eab - QMFunc(numpy.radians(x))), 'g')
     bx, by = BellFunc(PARTICLE_SPIN)
     ax1.plot(bx, by, 'r--')
