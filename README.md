@@ -76,7 +76,7 @@ Since all particles are detected. In other words, every particle which reaches t
 Although not required to run and test the simulation, this is an analysis program which does
 the analysis in a manner similar to how it is done in typical EPR experiments. It borrows some matching algorithms from Jan-Åke Larsson's BellTiming code (Jan-Åke Larsson, http://people.isy.liu.se/jalar/belltiming/). At some point, I might rewrite the matching algorithm but this suffices for now.
 
-The analysis program does not take any inputs. Instead it expects to find two files named `Alice.npy.gz` and `Bob.npy.gz`. It prints some 
+The analysis program does not take any input parameters. Instead it expects to find two files named `Alice.npy.gz` and `Bob.npy.gz`. It prints some 
 Statistics.
 
 Of course anyone is free to write their own analysis program.
