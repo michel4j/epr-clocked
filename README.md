@@ -74,11 +74,18 @@ NOTE: There will be as as many rows in the output file as there were in the corr
 Since all particles are detected. In other words, every particle which reaches the station is detected (100%).
 
 3) `analyse.py`:  
-Although not required to run and test the simulation, this is an analysis program which does
-the analysis in a manner similar to how it is done in typical EPR experiments. It borrows some matching algorithms from Jan-Åke Larsson's BellTiming code (http://people.isy.liu.se/jalar/belltiming/). At some point, I might rewrite the matching algorithm but this suffices for now.
+        
+        Usage: 
+	         analyse.py <spin>
 
-The analysis program does not take any input parameters. Instead it expects to find two files named `Alice.npy.gz` and `Bob.npy.gz`. It prints some 
-Statistics.
+
+Although not required to run and test the simulation, this is an analysis program which does
+the analysis in a manner similar to how it is done in typical EPR experiments. It borrows some 
+matching algorithms from Jan-Åke Larsson's BellTiming code (http://people.isy.liu.se/jalar/belltiming/). 
+
+The analysis program takes a single input parameter, which is the `spin` of the particles being simulated.
+Tt expects to find two files named `Alice.npy.gz` and `Bob.npy.gz`. It prints some 
+Statistics and the correlations, and also creates a plot for the measured angles.
 
 Of course anyone is free to write their own analysis program.
 
@@ -94,61 +101,60 @@ To convert .npy.gz files to text, use the following commands:
 Results:
 --------
 
-For a 120second simulation of a spin-1 source (photons), I get the following results:  
+For a 240 second simulation of a spin-1 source (photons), I get the following results:  
 
         No. of detected particles, non-zero outcomes only
-	        Alice:         2654386
-	          Bob:         2654381
+	        Alice:         5917791
+	          Bob:         5917848
 
 
         Calculation of expectation values
-          Settings       N_ab     Trials   <AB>_sim    <AB>_qm
-           0, 22.5       1646       2034      0.738      0.707
-           0, 67.5       1599       1963     -0.739     -0.707
-          45, 22.5       1632       2012      0.714      0.707
-          45, 67.5       1615       2024      0.714      0.707
+          Settings       N_ab     Trials   <AB>_sim    <AB>_qm StdErr_sim
+           0, 22.5       3683       4491      0.714      0.707      0.012
+           0, 67.5       3851       4702     -0.722     -0.707      0.012
+          45, 22.5       3690       4528      0.715      0.707      0.012
+          45, 67.5       3672       4501      0.720      0.707      0.012
 
 	        Same Angle <AB> = +1.00
 	        Oppo Angle <AB> = -1.00
-	        CHSH: <= 2.0, Sim: 2.905, QM: 2.828
+	        CHSH: <= 2.0, Sim: 2.872, QM: 2.828
 
         Statistics of residuals between exact QM curve and Simulation
-              Skew:         -0.4193
-             Range: -0.01045 : 0.007545
-            Length:              32
-          Variance:        1.76e-05
-          Kurtosis:        -0.08083
-              Mean:        0.000445
+              Skew:         -0.5012
+             Range: -0.01642 : 0.01114
+            Length:              33
+          Variance:       2.624e-05
+          Kurtosis:           2.567
+              Mean:      -0.0001089
 
 
-A similar simulation for a spin-1/2 source (electrons), I get the following results:  
+A 240s simulation for a spin-1/2 source (electrons), I get the following results:  
 
         No. of detected particles, non-zero outcomes only
-	        Alice:         2854767
-	          Bob:         2854760
+	        Alice:         5432125
+	          Bob:         5432142
 
 
         Calculation of expectation values
-          Settings       N_ab     Trials   <AB>_sim    <AB>_qm
-           0, 22.5       1875       2217     -0.922     -0.924
-           0, 67.5       1692       2111     -0.402     -0.383
-          45, 22.5       1862       2172     -0.907     -0.924
-          45, 67.5       1963       2298     -0.916     -0.924
+          Settings       N_ab     Trials   <AB>_sim    <AB>_qm StdErr_sim
+           0, 22.5       3576       4228     -0.921     -0.924      0.015
+           0, 67.5       3357       4163     -0.391     -0.383      0.007
+          45, 22.5       3623       4319     -0.919     -0.924      0.015
+          45, 67.5       3488       4153     -0.927     -0.924      0.016
 
 	        Same Angle <AB> = -1.00
 	        Oppo Angle <AB> = -0.00
-	        CHSH: <= 2.0, Sim: 2.343, QM: 2.389
+	        CHSH: <= 2.0, Sim: 2.376, QM: 2.389
 
         Statistics of residuals between exact QM curve and Simulation
-              Skew:          0.1341
-             Range: -0.01134 : 0.01229
-            Length:              32
-          Variance:       3.531e-05
-          Kurtosis:         -0.4947
-              Mean:       0.0002476
+              Skew:          0.2406
+             Range: -0.01207 : 0.01065
+            Length:              33
+          Variance:       2.667e-05
+          Kurtosis:          0.2961
+              Mean:      -0.0002568
 
-The files `analysis-spin-1.png` and `analysis-spin-0.5.png` show the curves. Note the quality of fit
-even though for each angle pair we are only simulating about 2000 points. 
+The files `analysis-spin-1.png` and `analysis-spin-0.5.png` show the curves. 
 
 Other comments:
 ---------------

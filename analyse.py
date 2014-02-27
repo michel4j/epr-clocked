@@ -40,7 +40,7 @@ rcParams['figure.edgecolor'] = 'white'
 
 
 PARTICLE_SPIN = 0.5
-ANGLE_RESOLUTION = 11.25
+ANGLE_RESOLUTION = 0.25
 COINC_WINDOW = 3.5e-4
 
    
@@ -48,6 +48,7 @@ def analyse(st1="Alice", st2="Bob"):
     """Perform analysis on saved output files after the simulation is done"""
     alice_raw = numpy.load(gzip.open('%s.npy.gz' % st1)) # angle, outcome 
     bob_raw = numpy.load(gzip.open('%s.npy.gz' % st2))  # angle, outcome 
+    
     
     print "No. of detected particles, non-zero outcomes only"
     print "\tAlice: %15d\n\t  Bob: %15d\n" % (len(alice_raw[alice_raw[:,-1] != 0.0]), 
@@ -66,7 +67,7 @@ def analyse(st1="Alice", st2="Bob"):
     alice = alice_orig[sl_co,:]
     bob = bob_orig[sl_co,:]
     
-    ab_orig = (alice_orig[:,-2] - bob_orig[:,-2])
+    ab_orig = numpy.abs(alice_orig[:,-2] - bob_orig[:,-2])
     ab_orig[ab_orig < 0] += 2*numpy.pi
     abdeg_orig = val(numpy.degrees(ab_orig))   
     adeg_orig  = val(numpy.degrees(alice_orig[:,-2]))
@@ -78,14 +79,16 @@ def analyse(st1="Alice", st2="Bob"):
     adeg  = val(numpy.degrees(alice[:,-2]))
     bdeg  = val(numpy.degrees(bob[:,-2]))
              
-    x = numpy.arange(0.0, 360.0, ANGLE_RESOLUTION)
+    # Find all settings used in simulation
+    angles = numpy.degrees(numpy.unique(numpy.concatenate((alice_raw[:,-2], bob_raw[:,-2]))))
+    x = angles
     Eab = numpy.zeros_like(x)
     Nab = numpy.zeros_like(x)
     ceff = numpy.zeros_like(x)
-    
+
     for i, a in enumerate(x):
-        sel = (abdeg == a)
-        sel_orig = (abdeg_orig == a)
+        sel = (numpy.abs(abdeg - a) < ANGLE_RESOLUTION)
+        sel_orig = (numpy.abs(abdeg_orig - a) < ANGLE_RESOLUTION)
         Nab[i] = sel.sum()
         Eab[i] = Nab[i] > 0.0  and (alice[sel,-1]*bob[sel,-1]).mean() or 0.0
         ceff[i] = (sel.sum()/sel_orig.sum())
@@ -111,7 +114,7 @@ def analyse(st1="Alice", st2="Bob"):
         Ai = alice[Ts, -1] 
         Bj = bob[Ts, -1]
         Cab_sim = (Ai*Bj).mean()
-        Cab_qm = QMFunc(numpy.radians(j-i))
+        Cab_qm = QMFunc(numpy.radians(j-i), PARTICLE_SPIN)
         
         print "%10s %10d %10d %10.3f %10.3f %10.3f" % (DESIG[k], Ts.sum(), 
                     OTs.sum(), Cab_sim, Cab_qm, numpy.abs(Cab_sim/numpy.sqrt(Ts.sum())))
@@ -133,8 +136,7 @@ def analyse(st1="Alice", st2="Bob"):
     gs = gridspec.GridSpec(2,2)
     ax1 = plt.subplot(gs[:,:])    
     ax1.plot(x, Eab, 'm-x', label='Model: E(a,b)')
-    ax1.plot(x, QMFunc(numpy.radians(x)), 'b-+', label='QM')
-    #ax1.plot(x, (Eab - QMFunc(numpy.radians(x))), 'g')
+    ax1.plot(x, QMFunc(numpy.radians(x), PARTICLE_SPIN), 'b-+', label='QM')
     bx, by = BellFunc(PARTICLE_SPIN)
     ax1.plot(bx, by, 'r--')
     ax1.legend()
@@ -149,7 +151,7 @@ def analyse(st1="Alice", st2="Bob"):
     plt.savefig('analysis-spin-%g.png' % PARTICLE_SPIN, dpi=72)
     
     print "\nStatistics of residuals between exact QM curve and Simulation"
-    sts = dict(zip(['Length', 'Range', 'Mean', 'Variance', 'Skew', 'Kurtosis'], stats.describe((Eab - QMFunc(numpy.radians(x))))))
+    sts = dict(zip(['Length', 'Range', 'Mean', 'Variance', 'Skew', 'Kurtosis'], stats.describe((Eab - QMFunc(numpy.radians(x), PARTICLE_SPIN)))))
     for k, v in sts.items():
         if isinstance(v, tuple):
             vf = ' : '.join(['%0.4g' % vi for vi in v])
@@ -159,21 +161,20 @@ def analyse(st1="Alice", st2="Bob"):
 
     plt.show()
 
-def QMFunc(a):
-    if PARTICLE_SPIN == 0.5:
+def QMFunc(a, spin=PARTICLE_SPIN):
+    if spin == 0.5:
         return -numpy.cos(a)
     else:
         return numpy.cos(2*a)
 
 def BellFunc(spin=PARTICLE_SPIN):
     if spin == 0.5:
-        x, y = [0.0, 180.0, 360.0], [-1.0, 1.0, -1.0]   
-    elif spin == 1.0:
-        x, y = [0.0, 90.0, 180.0, 270.0, 360.0], [1.0, -1.0, 1.0, -1.0,  1.0]
-    return x, y
+        return [0.0, 180.0, 360.0], [-1.0, 1.0, -1.0]   
+    else:
+        return [0.0, 90.0, 180.0, 270.0, 360.0], [1.0, -1.0, 1.0, -1.0,  1.0]
     
-def val(x, NEAREST=ANGLE_RESOLUTION):
-    return numpy.round(x/NEAREST)*NEAREST
+def val(x):
+    return numpy.round(x/ANGLE_RESOLUTION)*ANGLE_RESOLUTION
         
 def find_coincs(a_times, b_times):
     """
@@ -275,7 +276,9 @@ def find_coincs(a_times, b_times):
     return ai_f[ai_f>0], bi_f[bi_f>0]
              
 if __name__ == '__main__':
-    if len(sys.argv) == 3:
-        analyse(sys.argv[1], sys.argv[2])
+    if len(sys.argv) == 2:
+        PARTICLE_SPIN = float(sys.argv[1])
+        analyse()
     else:
-        analyse()        
+        print "Usage: \n\t analyse.py <spin>\n"
+        
