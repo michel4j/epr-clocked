@@ -38,7 +38,7 @@ The source program takes as input, 2 parameters:
         `duration`: (in seconds), determines how long the source will run, and how many 
           particles pairs will be generated. The number of particles in each file is printed at the end.
 
-NOTE, VERY IMPORTANT: For 0.01% of particles are emitted as singles instead of pairs so that 
+NOTE, VERY IMPORTANT: 0.01% of particles are emitted as singles instead of pairs so that 
 there will be no counterpart in the other file. Other 
 than that, the particles are recorded sequentially in time. This means it won't 
 work to simply assume that the nth particle in one file is a pair with the nth 
@@ -101,31 +101,31 @@ To convert .npy.gz files to text, use the following commands:
 Results:
 --------
 
-For a 240 second simulation of a spin-1 source (photons), I get the following results:  
+For a 120 second simulation of a spin-1 source (photons), I get the following results:  
 
         No. of detected particles, non-zero outcomes only
-	        Alice:         5917791
-	          Bob:         5917848
+	        Alice:         2954402
+	          Bob:         2954381
 
 
         Calculation of expectation values
           Settings       N_ab     Trials   <AB>_sim    <AB>_qm StdErr_sim
-           0, 22.5       3683       4491      0.714      0.707      0.012
-           0, 67.5       3851       4702     -0.722     -0.707      0.012
-          45, 22.5       3690       4528      0.715      0.707      0.012
-          45, 67.5       3672       4501      0.720      0.707      0.012
+           0, 22.5       1837       2240      0.725      0.707      0.017
+           0, 67.5       1806       2204     -0.734     -0.707      0.017
+          45, 22.5       1780       2216      0.713      0.707      0.017
+          45, 67.5       1748       2164      0.717      0.707      0.017
 
 	        Same Angle <AB> = +1.00
 	        Oppo Angle <AB> = -1.00
-	        CHSH: <= 2.0, Sim: 2.872, QM: 2.828
+	        CHSH: <= 2.0, Sim: 2.890, QM: 2.828
 
         Statistics of residuals between exact QM curve and Simulation
-              Skew:         -0.5012
-             Range: -0.01642 : 0.01114
+              Skew:          0.6885
+             Range: -0.01132 : 0.01624
             Length:              33
-          Variance:       2.624e-05
-          Kurtosis:           2.567
-              Mean:      -0.0001089
+          Variance:       4.176e-05
+          Kurtosis:          0.2354
+              Mean:        0.000678
 
 
 A 240s simulation for a spin-1/2 source (electrons), I get the following results:  

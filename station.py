@@ -42,7 +42,7 @@ class Station(object):
         p = numpy.random.choice(self.ps)
         
         # time it takes to rotate particle vector to channel vector.
-        td = max(ts*(m*p-abs(C)),  0.0)
+        td = ts*max((m*p-abs(C)),  0.0)
         self.results[i] = numpy.array([te + td, a, numpy.sign(C)])
 
     def save(self, fname):
