@@ -29,7 +29,7 @@ EMIS_TIME_MAX = 0.07 # maximum Time between emission events us
 EMIS_TIME_MIN = 0.014 # minimum Time between emission events us
 EMIS_ALPHA = 1.05      # beta = 6 - alpha, for beta distribution of time differences
 TIME_SCALE = numpy.pi*3e-2 # some constant related to the frequency of the particles
-ASYM = 0.94
+ASYM = 0.98
 
 class Source(object):
     """Generate and emit two particles with hidden variables"""
@@ -47,11 +47,11 @@ class Source(object):
         # reality check, randomly eliminate 0.1% of particles, ~0.05 on each side. (ie >99.9% efficiency)
         # > 4 sigma on either tail of gaussian
         rc = numpy.random.normal(loc=0.0, scale=1.0)
+        ml = numpy.random.uniform(ASYM, 1.000)
+        mr = numpy.random.uniform(ASYM, 1.000)
         if rc < 4.0: 
-            ml = numpy.random.uniform(ASYM, 1.0001)
             self.left.append((self.time, e, self.n, TIME_SCALE, ml)) # add Left particle            
         if rc > -4.0:
-            mr = numpy.random.uniform(ASYM, 1.0001)
             self.right.append((self.time, e+self.phase,  self.n, TIME_SCALE, mr)) # add Right particle 
         # kind of ideal emission time but to be more realistic, we can add some 
         # jitter to each particle's time

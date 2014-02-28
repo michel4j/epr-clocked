@@ -39,9 +39,9 @@ rcParams['figure.facecolor'] = 'white'
 rcParams['figure.edgecolor'] = 'white'
 
 
-PARTICLE_SPIN = 0.5
+PARTICLE_SPIN = 0.5 # overwritten by command line parameter
 ANGLE_RESOLUTION = 0.25
-COINC_WINDOW = 3.5e-4
+COINC_WINDOW = 4.0e-4
 
    
 def analyse(st1="Alice", st2="Bob"):
@@ -73,7 +73,7 @@ def analyse(st1="Alice", st2="Bob"):
     adeg_orig  = val(numpy.degrees(alice_orig[:,-2]))
     bdeg_orig  = val(numpy.degrees(bob_orig[:,-2]))
 
-    ab = (alice[:,-2] - bob[:,-2])
+    ab = numpy.abs(alice[:,-2] - bob[:,-2])
     ab[ab < 0] += 2*numpy.pi
     abdeg = val(numpy.degrees(ab))
     adeg  = val(numpy.degrees(alice[:,-2]))
@@ -135,19 +135,19 @@ def analyse(st1="Alice", st2="Bob"):
               
     gs = gridspec.GridSpec(2,2)
     ax1 = plt.subplot(gs[:,:])    
-    ax1.plot(x, Eab, 'm-x', label='Model: E(a,b)')
-    ax1.plot(x, QMFunc(numpy.radians(x), PARTICLE_SPIN), 'b-+', label='QM')
+    ax1.plot(x, Eab, 'm-x', label='Model: E(a,b)', lw=0.5)
+    ax1.plot(x, QMFunc(numpy.radians(x), PARTICLE_SPIN), 'b-+', label='QM', lw=0.5)
     bx, by = BellFunc(PARTICLE_SPIN)
     ax1.plot(bx, by, 'r--')
     ax1.legend()
+    ax1.set_xlim(0, 360)
         
     #ax2 =  plt.subplot(gs[1,:])       
     #ax2.plot(x, 100*ceff, 'b--', label='% Coincidence Efficiency')
     #ax2.set_ylim(0,105)
-    #ax2.legend()
+    #ax2.legend()    
+    #ax2.set_xlim(0, 360)
     
-    for ax in [ax1]:  ax.set_xlim(0, 360)
-
     plt.savefig('analysis-spin-%g.png' % PARTICLE_SPIN, dpi=72)
     
     print "\nStatistics of residuals between exact QM curve and Simulation"
