@@ -65,7 +65,7 @@ if __name__ == '__main__':
     if len(sys.argv) < 3:
         print "Usage: \n\t station.py <ArmSrcFile> <StationName> seting1,setting2,setting3,...\n"
     else:
-        if len(sys.argv) == 3: # no angles, use steps of 2.5 from 0 to 360
+        if len(sys.argv) == 3: # no angles, use steps of 22.5 from 0 to 360
             angles = numpy.linspace(0, numpy.pi*2, 33)
         else:
             angles = numpy.radians(numpy.array(map(float, sys.argv[3].split(','))))

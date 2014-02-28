@@ -59,8 +59,6 @@ def analyse(st1="Alice", st2="Bob"):
     alice_orig = alice_raw[ai,:]
     bob_orig = bob_raw[bi,:]
 
-    
-    # total time is greater than random number less than half the range
     abt_orig = numpy.abs(alice_orig[:,0] - bob_orig[:,0])
     sl_co = (abt_orig <= COINC_WINDOW)
         
