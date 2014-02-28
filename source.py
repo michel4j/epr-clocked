@@ -23,6 +23,7 @@ import numpy
 import sys
 import time
 import gzip
+import os
 
 # CONSTANTS
 EMIS_TIME_MAX = 0.07 # maximum Time between emission events us
@@ -78,6 +79,8 @@ if __name__ == '__main__':
     if len(sys.argv) != 3:
         print "Usage: \n\t source.py <spin> <duration in seconds>\n"
     else:
+        if os.path.exists('SEED'):
+            numpy.random.seed(numpy.loadtxt('SEED')[0])
         spin, duration = map(float, sys.argv[1:])
         source = Source(spin=spin)
         source.run(duration=duration)

@@ -19,6 +19,7 @@
 
 from __future__ import division
 import sys
+import os
 import numpy
 import gzip
 from scipy import stats
@@ -68,6 +69,8 @@ if __name__ == '__main__':
             angles = numpy.linspace(0, numpy.pi*2, 33)
         else:
             angles = numpy.radians(numpy.array(map(float, sys.argv[3].split(','))))
+        if os.path.exists('SEED'):
+            numpy.random.seed(numpy.loadtxt('SEED')[0])
         particles = numpy.load(gzip.open(sys.argv[1], 'rb'))
         station = Station(sys.argv[2], particles)
         station.run(angles)
