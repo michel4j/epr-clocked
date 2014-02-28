@@ -38,8 +38,8 @@ The source program takes as input, 2 parameters:
         `duration`: (in seconds), determines how long the source will run, and how many 
           particles pairs will be generated. The number of particles in each file is printed at the end.
 
-NOTE, VERY IMPORTANT: 0.01% of particles emitted are randomly discarded so that 
-for 0.01% of particles, there will be no counterpart in the other file. Other 
+NOTE, VERY IMPORTANT: For 0.01% of particles are emitted as singles instead of pairs so that 
+there will be no counterpart in the other file. Other 
 than that, the particles are recorded sequentially in time. This means it won't 
 work to simply assume that the nth particle in one file is a pair with the nth 
 particle of the other file. This also means 99.9% of emitted particles are paired. 
