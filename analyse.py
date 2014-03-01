@@ -26,6 +26,7 @@ import sys
 import matplotlib
 import pprint
 import gzip
+import itertools
 
 matplotlib.use('GTKAgg')
 from matplotlib import pyplot as plt
@@ -40,7 +41,7 @@ rcParams['figure.edgecolor'] = 'white'
 
 
 PARTICLE_SPIN = 0.5 # overwritten by command line parameter
-ANGLE_RESOLUTION = 0.25
+ANGLE_RESOLUTION = 0.1
 COINC_WINDOW = 4.0e-4
 
    
@@ -91,20 +92,18 @@ def analyse(st1="Alice", st2="Bob"):
         Eab[i] = Nab[i] > 0.0  and (alice[sel,-1]*bob[sel,-1]).mean() or 0.0
         ceff[i] = (sel.sum()/sel_orig.sum())
             
-    # Display results   
-    a = val(0.0)
-    ap = val(45.0)
-    b = val(22.5)
-    bp = val(67.5)
-        
-    DESIG = {0 : "0, 22.5", 1: "0, 67.5", 2: "45, 22.5", 3: "45, 67.5"}    
+    # Display results    
+    setting_pairs = list(itertools.product(numpy.unique(adeg), numpy.unique(bdeg)))
+    if len(setting_pairs) > 4:
+        setting_pairs = [(0, 22.5), (0, 67.5),(45, 22.5),(45, 67.5)]
+    
     CHSH = []
     QM = []
     
     print "\nCalculation of expectation values"
     print "%10s %10s %10s %10s %10s %10s" % (
             'Settings', 'N_ab', 'Trials', '<AB>_sim', '<AB>_qm', 'StdErr_sim')
-    for k,(i,j) in enumerate([(a,b),(a,bp), (ap,b), (ap, bp)]):
+    for k,(i,j) in enumerate(setting_pairs):
         As = (adeg==i)
         Bs = (bdeg==j)
         Ts = (As & Bs)
@@ -113,22 +112,22 @@ def analyse(st1="Alice", st2="Bob"):
         Bj = bob[Ts, -1]
         Cab_sim = (Ai*Bj).mean()
         Cab_qm = QMFunc(numpy.radians(j-i), PARTICLE_SPIN)
-        
-        print "%10s %10d %10d %10.3f %10.3f %10.3f" % (DESIG[k], Ts.sum(), 
+        desig = '%g, %g' % (i, j)
+        print "%10s %10d %10d %10.3f %10.3f %10.3f" % (desig, Ts.sum(), 
                     OTs.sum(), Cab_sim, Cab_qm, numpy.abs(Cab_sim/numpy.sqrt(Ts.sum())))
         CHSH.append(Cab_sim)
         QM.append(Cab_qm )
     
     sel_same = (abdeg == 0.0)
     sel_oppo = (abdeg == 90.0/PARTICLE_SPIN)
-    SIM_SAME = (alice[sel_same,-1]*bob[sel_same,-1]).mean()
-    SIM_DIFF = (alice[sel_oppo,-1]*bob[sel_oppo,-1]).mean()
+    SIM_SAME = sel_same.sum() > 0.0 and (alice[sel_same,-1]*bob[sel_same,-1]).mean() or numpy.nan
+    SIM_DIFF = sel_oppo.sum() > 0.0 and (alice[sel_oppo,-1]*bob[sel_oppo,-1]).mean() or numpy.nan
        
     print
     print "\tSame Angle <AB> = %+0.2f" % (SIM_SAME)
     print "\tOppo Angle <AB> = %+0.2f" % (SIM_DIFF)
     print "\tCHSH: <= 2.0, Sim: %0.3f, QM: %0.3f" % (abs(CHSH[0]-CHSH[1]+CHSH[2]+CHSH[3]), abs(QM[0]-QM[1]+QM[2]+QM[3]))
-    #print "\tCoincidence Efficiency:  %0.1f %%" % (100.0*ceff.mean())  
+    print "\tCoincidence Efficiency:  %0.1f %%" % (100.0*ceff.mean())  
 
               
     gs = gridspec.GridSpec(2,2)
