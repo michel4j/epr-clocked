@@ -78,7 +78,7 @@ def analyse(st1="Alice", st2="Bob"):
     bdeg  = val(numpy.degrees(bob[:,-2]))
              
     # Find all settings used in simulation
-    angles = numpy.degrees(numpy.unique(numpy.concatenate((alice_raw[:,-2], bob_raw[:,-2]))))
+    angles = numpy.unique(abdeg)
     x = angles
     Eab = numpy.zeros_like(x)
     Nab = numpy.zeros_like(x)
