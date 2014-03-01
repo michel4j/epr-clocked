@@ -120,7 +120,7 @@ def analyse(st1="Alice", st2="Bob"):
         QM.append(Cab_qm )
     
     sel_same = (abdeg == 0.0)
-    sel_oppo = (abdeg == 90.0/numpy.spin)
+    sel_oppo = (abdeg == 90.0/self.spin)
     SIM_SAME = (alice[sel_same,-1]*bob[sel_same,-1]).mean()
     SIM_DIFF = (alice[sel_oppo,-1]*bob[sel_oppo,-1]).mean()
        
