@@ -57,6 +57,7 @@ def analyse(st1="Alice", st2="Bob"):
 
     # find matching pairs using standard algorithm 
     ai, bi = find_coincs(alice_raw[:,0], bob_raw[:,0])
+
     alice_orig = alice_raw[ai,:]
     bob_orig = bob_raw[bi,:]
 
@@ -99,7 +100,7 @@ def analyse(st1="Alice", st2="Bob"):
     
     CHSH = []
     QM = []
-    
+        
     print "\nCalculation of expectation values"
     print "%10s %10s %10s %10s %10s %10s" % (
             'Settings', 'N_ab', 'Trials', '<AB>_sim', '<AB>_qm', 'StdErr_sim')
@@ -112,11 +113,12 @@ def analyse(st1="Alice", st2="Bob"):
         Bj = bob[Ts, -1]
         Cab_sim = (Ai*Bj).mean()
         Cab_qm = QMFunc(numpy.radians(j-i), PARTICLE_SPIN)
-        desig = '%g, %g' % (i, j)
+        desig = '%g, %g' % (i, j) 
         print "%10s %10d %10d %10.3f %10.3f %10.3f" % (desig, Ts.sum(), 
                     OTs.sum(), Cab_sim, Cab_qm, numpy.abs(Cab_sim/numpy.sqrt(Ts.sum())))
         CHSH.append(Cab_sim)
         QM.append(Cab_qm )
+    
     
     sel_same = (abdeg == 0.0)
     sel_oppo = (abdeg == 90.0/PARTICLE_SPIN)

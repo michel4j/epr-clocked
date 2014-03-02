@@ -45,7 +45,8 @@ class Source(object):
         e = numpy.random.uniform(0.0, 2*numpy.pi)
         self.time += EMIS_TIME_MIN + numpy.random.beta(EMIS_ALPHA, 6 - EMIS_ALPHA)*EMIS_TIME_MAX
         
-        # reality check, randomly eliminate 0.1% of particles, ~0.05 on each side. (ie >99.9% efficiency)
+        # reality check, randomly eliminate 0.1% of particles, ~0.05 on each side. 
+        # (ie >99.9% paired particles)
         # > 4 sigma on either tail of gaussian
         rc = numpy.random.normal(loc=0.0, scale=1.0)
         ml = numpy.random.uniform(ASYM, 1.000)
