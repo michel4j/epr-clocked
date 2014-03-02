@@ -43,8 +43,14 @@ there will be no counterpart in the other file. Other
 than that, the particles are recorded sequentially in time. This means it won't 
 work to simply assume that the nth particle in one file is a pair with the nth 
 particle of the other file. This also means 99.9% of emitted particles are paired. 
-Removing this feature will render this simulation meaningless. However, 99.999% should 
-work just as well.
+Removing this *feature* will render this simulation meaningless. However, 99.999% should 
+work just as well. Provided the simulation run for a long enough time.
+
+NOTE: This only affects the source, the stations will still detect every emitted particle,
+ie 100% detection efficiency. However, this *feature* makes it necessary to do matching during 
+data analysis just as it is done in every real EPR-experiment, and takes away the need
+to assume that the particles have already been pre-matched for us, which is a common mistake
+in discusions surrounding Bell's theorem and experiments.
 
 
 2) `station.py`:  
