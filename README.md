@@ -1,7 +1,15 @@
 EPR-clocked
 ===========
 
-A somewhat more complicated but still simple enough simulation of a clocked EPR experiment violating the CHSH.
+A somewhat more complicated but still simple enough simulation of a clocked EPR experiment violating the CHSH. This simulation was a response to a claim by Richard Gill that: 
+
+	"it is impossible to write a local realist computer simulation of a *clocked* 
+	experiment with no "non-detections", and which reliably reproduces the singlet
+	correlations? (By reliably, I mean in the situation that the settings are not 
+	in your control but are delivered to you from outside; the number of runs is 
+	large; and that this computer program does this not just once in a blue moon, 
+	by luck, but most times it is run on different people's computers.)"
+	
 
 How it works:
 ------------
