@@ -5,6 +5,7 @@ A somewhat more complicated but still simple enough simulation of a clocked EPR 
 classically:  
 
 For example:  
+
 	"Considering a generalization of usual Bell scenarios where external quantum inputs are provided to the parties, we show that any entangled quantum state exhibits correlations that cannot be simulated using only shared randomness and classical communication, even when the amount and rounds of classical communication involved are unrestricted." -- Denis Rosset et al 2013 New J. Phys. 15 053025 doi:10.1088/1367-2630/15/5/053025
 	
 	"it is impossible to write a local realist computer simulation of a *clocked* experiment with no "non-detections", and which reliably reproduces the singlet correlations? (By reliably, I mean in the situation that the settings are not in your control but are delivered to you from outside; the number of runs is large; and that this computer program does this not just once in a blue moon, by luck, but most times it is run on different people's computers.)" -- Richard Gill
