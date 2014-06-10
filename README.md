@@ -7,9 +7,10 @@ classically:
 For example:  
 
 	"Considering a generalization of usual Bell scenarios where external quantum inputs are provided 
-	to the parties, we show that any entangled quantum state exhibits correlations that cannot be simulated 
-	using only shared randomness and classical communication, even when the amount and rounds of classical
-	communication involved are unrestricted." -- Denis Rosset et al 2013 New J. Phys. 15 053025 
+	to the parties, we show that any entangled quantum state exhibits correlations that cannot be 
+	simulated using only shared randomness and classical communication, even when the amount and rounds
+	of classical communication involved are unrestricted." 
+	-- Denis Rosset et al 2013 New J. Phys. 15 053025 
 	
 	"it is impossible to write a local realist computer simulation of a *clocked* experiment with no 
 	"non-detections", and which reliably reproduces the singlet correlations? (By reliably, I mean in the
