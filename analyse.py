@@ -51,7 +51,7 @@ def analyse(st1="Alice", st2="Bob"):
     bob_raw = numpy.load(gzip.open('%s.npy.gz' % st2))  # angle, outcome 
     
     
-    print "No. of detected particles, non-zero outcomes only"
+    print "No. of detected particles"
     print "\tAlice: %15d\n\t  Bob: %15d\n" % (len(alice_raw[alice_raw[:,-1] != 0.0]), 
                                       len(bob_raw[bob_raw[:,-1] != 0.0]))
 
@@ -129,6 +129,7 @@ def analyse(st1="Alice", st2="Bob"):
     print "\tSame Angle <AB> = %+0.2f" % (SIM_SAME)
     print "\tOppo Angle <AB> = %+0.2f" % (SIM_DIFF)
     print "\tCHSH: <= 2.0, Sim: %0.3f, QM: %0.3f" % (abs(CHSH[0]-CHSH[1]+CHSH[2]+CHSH[3]), abs(QM[0]-QM[1]+QM[2]+QM[3]))
+    #print "\tCoincidence Efficiency:  %0.1f %%" % (100.0*ceff.mean())  
 
               
     gs = gridspec.GridSpec(2,2)
