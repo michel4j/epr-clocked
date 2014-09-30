@@ -24,6 +24,8 @@ import numpy
 import gzip
 from scipy import stats
 
+STATION_NOISE = 0.001
+
 def normalize(v):
     return v/v.max()
     
@@ -33,14 +35,13 @@ class Station(object):
         self.name = name
         self.particles = particles
         self.results = numpy.empty((len(particles), 3))
-        self.ps = 0.5*numpy.sin(numpy.linspace(0, numpy.pi/6.0, 10000))**2
          
     def detect(self, particle, setting, i):
         """Calculate the station outcome for the given `particle`"""
         a = setting 
-        te, e, n, ts, m = particle
-        C =  (0.5/numpy.pi)*((-1)**n)*numpy.cos(n*(e - a))
-        p = numpy.random.choice(self.ps)
+        te, e, n, ts, p = particle
+        C = ((-1)**n)*numpy.cos(n*(e - a))
+        m = numpy.random.uniform(1-STATION_NOISE, 1+STATION_NOISE)
         
         # time it takes to rotate particle vector to channel vector.
         td = ts*max((m*p-abs(C)),  0.0)

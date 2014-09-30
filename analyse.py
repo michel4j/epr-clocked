@@ -42,7 +42,7 @@ rcParams['figure.edgecolor'] = 'white'
 
 PARTICLE_SPIN = 0.5 # overwritten by command line parameter
 ANGLE_RESOLUTION = 0.1
-COINC_WINDOW = 4.0e-4
+COINC_WINDOW = 1.0e-4
 
    
 def analyse(st1="Alice", st2="Bob"):
