@@ -129,7 +129,6 @@ def analyse(st1="Alice", st2="Bob"):
     print "\tSame Angle <AB> = %+0.2f" % (SIM_SAME)
     print "\tOppo Angle <AB> = %+0.2f" % (SIM_DIFF)
     print "\tCHSH: <= 2.0, Sim: %0.3f, QM: %0.3f" % (abs(CHSH[0]-CHSH[1]+CHSH[2]+CHSH[3]), abs(QM[0]-QM[1]+QM[2]+QM[3]))
-    print "\tCoincidence Efficiency:  %0.1f %%" % (100.0*ceff.mean())  
 
               
     gs = gridspec.GridSpec(2,2)
@@ -141,12 +140,6 @@ def analyse(st1="Alice", st2="Bob"):
     ax1.legend()
     ax1.set_xlim(0, 360)
         
-    #ax2 =  plt.subplot(gs[1,:])       
-    #ax2.plot(x, 100*ceff, 'b--', label='% Coincidence Efficiency')
-    #ax2.set_ylim(0,105)
-    #ax2.legend()    
-    #ax2.set_xlim(0, 360)
-    
     plt.savefig('analysis-spin-%g.png' % PARTICLE_SPIN, dpi=72)
     
     print "\nStatistics of residuals between exact QM curve and Simulation"
